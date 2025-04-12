@@ -1,7 +1,7 @@
 require("aychar")
 require("aychar.lazy")
 
-vim.cmd("colorscheme github_dark_default")
+vim.cmd("colorscheme github_light_default")
 vim.cmd("hi Normal ctermbg=none guibg=none")
 vim.o.number = true
 vim.o.relativenumber = true

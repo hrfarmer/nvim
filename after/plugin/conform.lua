@@ -2,6 +2,7 @@ local js_formatters = { "prettierd", "prettier" }
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
+		go = { "go fmt" },
 		-- Conform will run multiple formatters sequentially
 		python = { "black" },
 		-- You can customize some of the format options for the filetype (:help conform.format)
