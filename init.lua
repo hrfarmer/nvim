@@ -22,47 +22,34 @@ autocmd("FileType", {
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>a", { noremap = true, silent = true })
 
-function InitializeThemeFile()
-	local file = io.open(vim.fn.stdpath("config") .. "/.theme", "w")
-	if file then
-		file:write("dark\n")
-		file:close()
-	end
+local function apply_theme()
+	local themeFile = io.open(vim.fn.stdpath("config") .. "/.theme", "r")
+	if themeFile then
+		local theme = themeFile:read("*l")
+		themeFile:close()
 
-	vim.cmd("colorscheme github_dark_default")
-end
-
-local themeFile = io.open(vim.fn.stdpath("config") .. "/.theme", "r")
-if themeFile then
-	local theme = themeFile:read("*l")
-	themeFile:close()
-
-	if theme and #theme > 0 then
-		if theme == "light" then
-			vim.cmd("colorscheme github_light_default")
-		else
-			vim.cmd("colorscheme github_dark_default")
+		if theme and #theme > 0 then
+			if theme == "light" then
+				vim.cmd("colorscheme github_light_default")
+			else
+				vim.cmd("colorscheme github_dark_default")
+			end
 		end
 	else
-		InitializeThemeFile()
+		vim.cmd("colorscheme github_dark_default")
 	end
-else
-	InitializeThemeFile()
+	vim.cmd("hi Normal ctermbg=none guibg=none")
 end
 
-vim.api.nvim_create_user_command("Theme", function(opts)
-	local file = io.open(vim.fn.stdpath("config") .. "/.theme", "w")
-	if file then
-		if opts.fargs[1] == "light" then
-			vim.cmd("colorscheme github_light_default")
-			file:write("light\n")
-		elseif opts.fargs[1] == "dark" then
-			vim.cmd("colorscheme github_dark_default")
-			file:write("dark\n")
-		end
-		vim.cmd("hi Normal ctermbg=none guibg=none")
-		file:close()
-	end
-end, { nargs = 1 })
+apply_theme()
+
+local theme_watcher = vim.loop.new_fs_event()
+theme_watcher:start(
+	vim.fn.stdpath("config") .. "/.theme",
+	{},
+	vim.schedule_wrap(function()
+		apply_theme()
+	end)
+)
 
 vim.cmd("hi Normal ctermbg=none guibg=none")
