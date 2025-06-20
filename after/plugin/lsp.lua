@@ -38,37 +38,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-require("mason").setup({})
-require("mason-lspconfig").setup({
-	ensure_installed = { "ts_ls", "rust_analyzer", "emmet_language_server", "jsonls", "bashls", "gopls" },
-	handlers = {
-		function(server_name)
-			require("lspconfig")[server_name].setup({
-				capabilities = lsp_capabilities,
-			})
-		end,
-		lua_ls = function()
-			require("lspconfig").lua_ls.setup({
-				capabilities = lsp_capabilities,
-				settings = {
-					Lua = {
-						runtime = {
-							version = "LuaJIT",
-						},
-						diagnostics = {
-							globals = { "vim" },
-						},
-						workspace = {
-							library = {
-								vim.env.VIMRUNTIME,
-							},
-						},
-					},
+vim.lsp.config("ts_ls", {})
+vim.lsp.config("rust_analyzer", {})
+vim.lsp.config("emmet_language_server", {})
+vim.lsp.config("jsonls", {})
+vim.lsp.config("bashls", {})
+vim.lsp.config("gopls", {})
+vim.lsp.config("lua_ls", {
+	settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT",
+			},
+			diagnostics = {
+				globals = {
+					"vim",
+					"require",
 				},
-			})
-		end,
+			},
+		},
 	},
 })
+
+require("mason").setup({})
+require("mason-lspconfig").setup()
 
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
