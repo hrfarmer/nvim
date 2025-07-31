@@ -3,11 +3,8 @@ require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		go = { "go fmt" },
-		-- Conform will run multiple formatters sequentially
-		python = { "black" },
-		-- You can customize some of the format options for the filetype (:help conform.format)
+		-- python = { "black" },
 		rust = { "rustfmt", lsp_format = "fallback" },
-		-- Conform will run the first available formatter
 		javascript = js_formatters,
 		typescript = js_formatters,
 		javascriptreact = js_formatters,

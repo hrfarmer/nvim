@@ -11,7 +11,7 @@ vim.o.autoindent = true
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd("FileType", {
-	pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json" },
+	pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "sql" },
 	callback = function()
 		vim.opt_local.tabstop = 2
 		vim.opt_local.shiftwidth = 2
@@ -21,6 +21,8 @@ autocmd("FileType", {
 
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>a", { noremap = true, silent = true })
+
+vim.cmd("colorscheme github_dark_default")
 
 local function apply_theme()
 	local themeFile = io.open(vim.fn.stdpath("config") .. "/.theme", "r")
@@ -41,15 +43,15 @@ local function apply_theme()
 	vim.cmd("hi Normal ctermbg=none guibg=none")
 end
 
-apply_theme()
-
-local theme_watcher = vim.loop.new_fs_event()
-theme_watcher:start(
-	vim.fn.stdpath("config") .. "/.theme",
-	{},
-	vim.schedule_wrap(function()
-		apply_theme()
-	end)
-)
+-- apply_theme()
+--
+-- local theme_watcher = vim.loop.new_fs_event()
+-- theme_watcher:start(
+-- 	vim.fn.stdpath("config") .. "/.theme",
+-- 	{},
+-- 	vim.schedule_wrap(function()
+-- 		apply_theme()
+-- 	end)
+-- )
 
 vim.cmd("hi Normal ctermbg=none guibg=none")

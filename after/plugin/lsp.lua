@@ -44,6 +44,7 @@ vim.lsp.config("emmet_language_server", {})
 vim.lsp.config("jsonls", {})
 vim.lsp.config("bashls", {})
 vim.lsp.config("gopls", {})
+vim.lsp.config("postgres_lsp", {})
 vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
