@@ -63,7 +63,6 @@ vim.lsp.config("lua_ls", {
 })
 
 require("mason").setup({})
-require("mason-lspconfig").setup()
 
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
