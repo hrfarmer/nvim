@@ -10,6 +10,9 @@ require("conform").setup({
 		javascriptreact = js_formatters,
 		typescriptreact = js_formatters,
 		json = js_formatters,
+		astro = js_formatters,
+		css = js_formatters,
+		html = js_formatters,
 	},
 	format_on_save = {
 		-- These options will be passed to conform.format()

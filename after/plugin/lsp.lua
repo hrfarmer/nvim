@@ -21,6 +21,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "]d", function()
 			vim.diagnostic.goto_prev()
 		end, opts)
+		vim.keymap.set("n", "<leader>q", function()
+			vim.diagnostic.setloclist()
+		end, opts)
 		vim.keymap.set("n", "<leader>vca", function()
 			vim.lsp.buf.code_action()
 		end, opts)
@@ -46,6 +49,7 @@ vim.lsp.config("bashls", {})
 vim.lsp.config("gopls", {})
 vim.lsp.config("postgres_lsp", {})
 vim.lsp.config("clangd", {})
+vim.lsp.config("astro", {})
 vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
@@ -63,6 +67,20 @@ vim.lsp.config("lua_ls", {
 })
 
 require("mason").setup({})
+require("mason-lspconfig").setup({
+	ensure_installed = {
+		"ts_ls",
+		"rust_analyzer",
+		"emmet_language_server",
+		"jsonls",
+		"bashls",
+		"gopls",
+		"postgres_lsp",
+		"clangd",
+		"lua_ls",
+		"astro",
+	},
+})
 
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }

@@ -6,7 +6,9 @@ vim.o.number = true
 vim.o.relativenumber = true
 
 vim.o.tabstop = 4
-vim.o.expandtab = false
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.expandtab = true
 vim.o.autoindent = true
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -18,6 +20,13 @@ autocmd("FileType", {
 		vim.opt_local.shiftwidth = 2
 		vim.opt_local.expandtab = true
 	end,
+})
+
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = {"*.fpp", "*.fppi"},
+  callback = function()
+    vim.bo.filetype = "fpp"
+  end,
 })
 
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
